@@ -1,2 +1,2 @@
 # budget-app
-**create budgety app
+**create budgety app**
