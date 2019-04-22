@@ -63,7 +63,9 @@ var UIController = (function() {
     inputType: '.add__type',
     inputDescription: '.add__description',
     inputValue: '.add__value',
-    inputBtn: '.add__btn'
+    inputBtn: '.add__btn',
+    incomeContainer: '.income__list',
+    expenseContainer: '.expenses__list'
   };
 
   return {
@@ -73,6 +75,26 @@ var UIController = (function() {
         description: document.querySelector(DOMstring.inputDescription).value,
         value: document.querySelector(DOMstring.inputValue).value
       };
+    },
+
+    addListItem: function(obj, type) {
+      var html, newHtml, element;
+      //membuat HTML string dengan teks placeholder
+      if (type === 'inc') {
+        element = DOMstring.incomeContainer;
+
+        html =  '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+      } else if (type === 'exp') {
+        element = DOMstring.expenseContainer;
+
+        html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+      }
+      //menggantikan teks placholder dengan beberapa data aktual
+      newHtml = html.replace('%id%', obj.id);
+      newHtml = newHtml.replace('%description%', obj.description);
+      newHtml = newHtml.replace('%value%', obj.value);
+      //memasukan HTML kedalam DOM
+      document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
     },
 
     getDOMString: function() {
@@ -105,7 +127,10 @@ var controller = (function (budgetController, UIController) {
     
   // 2. menambahkan item ke dalam budget controller
     newItem = budgetController.addItem(input.type, input.description, input.value);
+
   // 3. menambahkan item ke dalam UI controller
+    UIController.addListItem(newItem, input.type);
+
   // 4. menghitung budget
   // 5. menampilkan hasil budget
     
