@@ -97,6 +97,19 @@ var UIController = (function() {
       document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
     },
 
+    //menghapus field pada UI
+    clearFields: function() {
+      var fields, fieldsArr;
+      fields = document.querySelectorAll(`${DOMstring.inputDescription}, ${DOMstring.inputValue}`);
+
+      fieldsArr = Array.prototype.slice.call(fields);
+
+      fieldsArr.forEach(function(current, index, array) {
+        current.value = "";
+        fieldsArr[0].focus();
+      });
+    },
+
     getDOMString: function() {
       return DOMstring;
     }
@@ -131,8 +144,11 @@ var controller = (function (budgetController, UIController) {
   // 3. menambahkan item ke dalam UI controller
     UIController.addListItem(newItem, input.type);
 
-  // 4. menghitung budget
-  // 5. menampilkan hasil budget
+  // 4. menghapus field pada UI
+    UIController.clearFields();
+
+  // 5. menghitung budget
+  // 6. menampilkan hasil budget
     
   };
 
